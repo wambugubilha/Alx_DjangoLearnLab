@@ -1,6 +1,9 @@
-from django.contrib import admin
+# Django Admin Configuration for Book Model
 
-# Register your models here.
+## Registration
+
+```python
+from django.contrib import admin
 from .models import Book
 
 @admin.register(Book)
