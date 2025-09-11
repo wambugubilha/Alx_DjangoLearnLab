@@ -6,7 +6,8 @@ class RelationshipAppConfig(AppConfig):
 
     def ready(self):
         try:
-            import relationship_app.signals # type: ignore
+            from ..relationship_app import signals
+            signals = signals
         except ImportError as e:
             import logging
             logging.error(f"Failed to import signals: {e}")
