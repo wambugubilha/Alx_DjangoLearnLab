@@ -11,47 +11,47 @@ from ..relationship_app.models import UserProfile
 from .models import Library
 from .forms import BookForm # type: ignore
 
-@permission_required('relationship_app.can_add_book', raise_exception=True)
-def add_book(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('list_books')  # or wherever you want
-    else:
-        form = BookForm()
-    return render(request, 'relationship_app/add_book.html', {'form': form})
+#@permission_required('relationship_app.can_add_book', raise_exception=True)
+#def add_book(request):
+#    if request.method == 'POST':
+#        form = BookForm(request.POST)
+#        if form.is_valid():
+#            form.save()
+#            return redirect('list_books')  # or wherever you want
+#    else:
+#        form = BookForm()
+#    return render(request, 'relationship_app/add_book.html', {'form': form})
 
 
-@permission_required('relationship_app.can_change_book', raise_exception=True)
-def edit_book(request, book_id):
-    book = get_object_or_404(Book, id=book_id)
-    form = BookForm(request.POST or None, instance=book)
-    if form.is_valid():
-        form.save()
-        return redirect('list_books')
-    return render(request, 'relationship_app/edit_book.html', {'form': form})
+#@permission_required('relationship_app.can_change_book', raise_exception=True)
+#ef edit_book(request, book_id):
+#    book = get_object_or_404(Book, id=book_id)
+#    form = BookForm(request.POST or None, instance=book)
+#    if form.is_valid():
+#        form.save()
+#        return redirect('list_books')
+#    return render(request, 'relationship_app/edit_book.html', {'form': form})
 
-@permission_required('relationship_app.can_delete_book', raise_exception=True)
-def delete_book(request, book_id):
-    book = get_object_or_404(Book, id=book_id)
-    if request.method == 'POST':
-        book.delete()
-        return redirect('list_books')
-    return render(request, 'relationship_app/delete_book.html', {'book': book})
+#@permission_required('relationship_app.can_delete_book', raise_exception=True)
+#def delete_book(request, book_id):
+#    book = get_object_or_404(Book, id=book_id)
+#    if request.method == 'POST':
+#        book.delete()
+#        return redirect('list_books')
+#    return render(request, 'relationship_app/delete_book.html', {'book': book})
 
 
 def is_admin(user):
-    return hasattr(user, 'userprofile') and UserProfile == 'Admin'
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
 def is_librarian(user):
-    return hasattr(user, 'userprofile') and UserProfile == 'Librarian'
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
 def is_member(user):
-    return hasattr(user, 'userprofile') and UserProfile == 'Member'
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
 @user_passes_test(is_admin)
-def Admin_view(request):
+def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
 @user_passes_test(is_librarian)
@@ -59,8 +59,9 @@ def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
 @user_passes_test(is_member)
-def Member_view(request):
+def member_view(request):
     return render(request, 'relationship_app/member_view.html')
+
 
 
 # ✅ Function-based view: List all books
