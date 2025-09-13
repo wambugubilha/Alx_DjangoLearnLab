@@ -4,6 +4,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Book
 from  ..bookshelf import BookForm
 from ..bookshelf import BookSearchForm
+from .forms import ExampleForm
+
+def create_book(request):
+    form = ExampleForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('book_list')
+    return render(request, 'bookshelf/form_example.html', {'form': form})
+
 
 def search_books(request):
     form = BookSearchForm(request.GET or None)
