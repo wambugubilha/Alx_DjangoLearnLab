@@ -38,3 +38,45 @@ python manage.py runserver
 ## HTTPS & Secure Redirects
 - Enforced HTTPS via `SECURE_SSL_REDIRECT`.
 - Configured HSTS and secure cookies.
+
+# Permissions and Groups Setup
+
+## Custom Permissions
+Defined in `Book` model:
+- can_view
+- can_create
+- can_edit
+- can_delete
+
+## Groups
+Created via management command:
+- Viewers: can_view
+- Editors: can_view, can_create, can_edit
+- Admins: all permissions
+
+## Views
+Protected using `@permission_required` decorators.
+
+## Testing
+Use Django admin to assign users to groups and verify access.
+
+# Django Security Measures
+
+## Configured Settings
+- DEBUG = False
+- Secure cookies and headers
+- HTTPS enforced via SECURE_SSL_REDIRECT and HSTS
+
+## CSRF Protection
+- {% csrf_token %} added to all forms
+
+## SQL Injection Prevention
+- All queries use Django ORM
+- User input validated via Django forms
+
+## XSS Protection
+- Auto-escaping in templates
+- CSP headers configured via django-csp
+
+## Testing
+- Manual tests performed for CSRF, XSS, and SQL injection
