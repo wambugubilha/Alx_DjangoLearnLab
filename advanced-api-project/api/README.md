@@ -30,3 +30,16 @@ The `BookListView` supports advanced query capabilities:
 - **Ordering**: Use `?ordering=title` or `?ordering=-publication_year` to sort results.
 
 These features are powered by DjangoFilterBackend, SearchFilter, and OrderingFilter.
+
+## 🧪 API Testing Strategy
+
+Unit tests are written in `api/test_views.py` using Django’s built-in test framework.
+
+### What We Test:
+- CRUD operations for the Book model
+- Filtering, searching, and ordering in BookListView
+- Permission enforcement for authenticated vs unauthenticated users
+
+### How to Run Tests:
+```bash
+python manage.py test api
