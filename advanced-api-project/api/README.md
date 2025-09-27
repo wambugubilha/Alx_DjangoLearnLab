@@ -8,6 +8,7 @@ The BookUpdateView is implemented with UpdateAPIView. It enables authenticated u
 
 The BookDeleteView is configured with DestroyAPIView. It allows authenticated users to delete a book instance from the database. This view can be restricted further using custom permission classes.
 
+
 All views use the BookSerializer to handle data serialization and validation. The serializer ensures that the publication year is valid and formats the book data for API responses.
 
 Permissions are enforced using Django REST Framework’s built-in classes. AllowAny is used for read-only views (ListView and DetailView), while IsAuthenticated is applied to write operations (CreateView, UpdateView, and DeleteView).
@@ -19,3 +20,13 @@ Each view is designed to be modular and extensible. Developers can override meth
 Manual testing is recommended using tools like Postman or curl. Each endpoint should be tested for correct data handling, validation, and permission enforcement.
 
 These views form the backbone of the API’s CRUD functionality and are structured to support future enhancements such as filtering, searching, and ordering.
+
+## Filtering, Searching, and Ordering
+
+The `BookListView` supports advanced query capabilities:
+
+- **Filtering**: Use query parameters like `?title=`, `?author=`, `?publication_year=` to filter results.
+- **Searching**: Use `?search=` to search by book title or author name.
+- **Ordering**: Use `?ordering=title` or `?ordering=-publication_year` to sort results.
+
+These features are powered by DjangoFilterBackend, SearchFilter, and OrderingFilter.
