@@ -9,7 +9,7 @@ class BookAPITestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.client.force_authenticate(user=self.user)
+        self.client.login(username='testuser', password='testpass')
         self.author = Author.objects.create(name='Chinua Achebe')
         self.book = Book.objects.create(title='Things Fall Apart', publication_year=1958, author=self.author)
         self.list_url = reverse('book-list')
