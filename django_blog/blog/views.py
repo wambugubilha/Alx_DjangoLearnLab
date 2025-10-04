@@ -14,10 +14,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 from .forms import CommentForm
-
-
+from django.db.models import Q
 
 
 def register_view(request):
@@ -141,3 +140,16 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return self.object.post.get_absolute_url()
 
+def search_view(request):
+    query = request.GET.get("q", "")
+    results = Post.objects.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(tags__name__icontains=query)
+    ).distinct()
+    return render(request, "blog/search_results.html", {"query": query, "results": results})
+
+def tag_view(request, tag_name):
+    tag = get_object_or_404(Tag, name=tag_name)
+    posts = tag.post_set.all()
+    return render(request, "blog/tag_posts.html", {"tag": tag, "posts": posts})
