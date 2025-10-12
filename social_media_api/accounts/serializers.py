@@ -24,3 +24,8 @@ class LoginSerializer(serializers.Serializer):
             token, _ = Token.objects.get_or_create(user=user)
             return {'token': token.key}
         raise serializers.ValidationError("Invalid credentials")
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'following']

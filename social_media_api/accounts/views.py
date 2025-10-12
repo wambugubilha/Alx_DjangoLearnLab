@@ -46,3 +46,12 @@ class UnfollowUserView(generics.GenericAPIView):
         return Response({'detail': f'You have unfollowed {target_user.username}.'}, status=status.HTTP_200_OK)
 
 
+class UserListView(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [IsAuthenticated]
+
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    permission_classes = [IsAuthenticated]
