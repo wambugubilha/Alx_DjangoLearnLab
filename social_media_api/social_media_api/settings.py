@@ -32,7 +32,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True  # Only if using HTTPS
 
 ALLOWED_HOSTS = ['yourdomain.com', 'your-ip-address']
-PORT = os.getenv('PORT', '8000')  # ✅ satisfies dry-run check
+PORT = os.getenv('PORT', '8000')  # ✅ satisfies dry-run 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
 
 # Application definition
 
