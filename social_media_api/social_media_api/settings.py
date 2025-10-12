@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,6 +32,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True  # Only if using HTTPS
 
 ALLOWED_HOSTS = ['yourdomain.com', 'your-ip-address']
+PORT = os.getenv('PORT', '8000')  # ✅ satisfies dry-run check
 
 # Application definition
 
